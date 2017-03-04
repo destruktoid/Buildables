@@ -21,18 +21,11 @@ class CfgFunctions
     };
 };
 
-
-
 class CfgVehicles
 {
     class Man;
     class CAManBase : Man
     {
-        class EventHandlers
-        {
-            init = "SANDBAG_obj = objNull;"
-        };
-        
         class ACE_SelfActions
         {
             class ACE_DEST_Build
@@ -48,7 +41,7 @@ class CfgVehicles
                     condition = "(SANDBAG_obj in (attachedObjects player))";
                     statement = "player playMoveNow 'AinvPknlMstpSnonWnonDnon_medic_1'; waituntil {(animationState player != 'AinvPknlMstpSnonWnonDnon_medic_1')}; (findDisplay 46) displayRemoveEventHandler ['MouseZChanged', DEST_scrollEVH]; detach SANDBAG_obj; SANDBAG_obj = objNull; for '_i' from 1 to 5 do {player removeitem 'ACE_Sandbag_empty'};";
                     showDisabled = 0;
-               };
+                };
                 
                 class buildCancel
                 {
@@ -82,6 +75,14 @@ class CfgVehicles
                     showDisabled = 0;
                 };
             };
+        };
+    };
+};
+
+class Extended_Init_EventHandlers {
+    class CAManBase {
+        class Sandbag_init_eh {
+            init = "SANDBAG_obj = objNull; ['ace_unconscious', {if ((_this select 1)) then {deletevehicle SANDBAG_obj; SANDBAG_obj = objNull;} }] call CBA_fnc_addEventHandler;";
         };
     };
 };
