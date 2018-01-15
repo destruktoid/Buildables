@@ -1,11 +1,11 @@
 class CfgPatches
 {
-    class DEST_buildables
+    class 160thSOR_Buildables
     {
-        author[] = {"destruktoid"};
-        units[] = {};
+        author = "destruktoid";
+        units[] = {"DEST_Build_Box"};
         requiredVersion = 1.0;
-        requiredAddons[] = {"ace_interaction"};
+        requiredAddons[] = {"ace_interaction","160th_SOR_Loadouts"};
     };
 };
 
@@ -16,73 +16,66 @@ class CfgFunctions
         class main
         {
             file = "DEST_buildables\functions";
-            class place;
+            class create;
         };
     };
 };
 
 class CfgVehicles
 {
-    class Man;
-    class CAManBase : Man
+    class Box_NATO_Equip_F;
+    class DEST_Build_Box : BOX_NATO_Equip_F
     {
-        class ACE_SelfActions
+        editorCategory = "SOR_Cat_Supplies";
+        editorSubcategory = "SOR_SubCat_SupplyBoxes";
+        vehicleClass = "SOR_SupplyBoxes";
+        displayName = "Box [Construction]";
+        class ACE_Actions
         {
-            class ACE_DEST_Build
+            class ACE_MainActions
             {
-                displayName = "Build Objects";
+                displayname = "Interactions";
+                selection = "";
+                distance = 2;
                 condition = "true";
-                statement = "";
-                showDisabled = 0;
-                
-                class buildPlace
+                class ACE_DEST_Build
                 {
-                    displayName = "Place object";
-                    condition = "(SANDBAG_obj in (attachedObjects player))";
-                    statement = "player playMoveNow 'AinvPknlMstpSnonWnonDnon_medic_1'; waituntil {(animationState player != 'AinvPknlMstpSnonWnonDnon_medic_1')}; (findDisplay 46) displayRemoveEventHandler ['MouseZChanged', DEST_scrollEVH]; detach SANDBAG_obj; SANDBAG_obj = objNull; for '_i' from 1 to 5 do {player removeitem 'ACE_Sandbag_empty'};";
-                    showDisabled = 0;
-                };
-                
-                class buildCancel
-                {
-                    displayName = "Cancel placement";
-                    condition = "(SANDBAG_obj in (attachedObjects player))";
-                    statement = "(findDisplay 46) displayRemoveEventHandler ['MouseZChanged', DEST_scrollEVH]; detach SANDBAG_obj; deletevehicle SANDBAG_obj; SANDBAG_obj = objNull;";
-                    showDisabled = 0;
-                };
-                
-                class selLong
-                {
-                    displayName = "Place wall (Long)";
-                    condition = "isNull SANDBAG_obj && (({_x == 'ACE_Sandbag_empty'} count items player) >= 5)";
-                    statement = "['Land_BagFence_Long_F'] spawn DEST_fnc_place;";
-                    showDisabled = 0;
-                };
-                
-                class selShort
-                {
-                    displayName = "Place wall (Short)";
-                    condition = "isNull SANDBAG_obj && (({_x == 'ACE_Sandbag_empty'} count items player) >= 5)";
-                    statement = "['Land_BagFence_Short_F'] spawn DEST_fnc_place;";
-                    showDisabled = 0;
-                };
-                
-                class selRound
-                {
-                    displayName = "Place wall (Round)";
-                    condition = "isNull SANDBAG_obj && (({_x == 'ACE_Sandbag_empty'} count items player) >= 5)";
-                    statement = "['Land_BagFence_Round_F'] spawn DEST_fnc_place;";
-                    showDisabled = 0;
+                    displayName = "Build Objects";
+                    condition = "true";
+                    statement = "";
+                    distance = 3;
+                    selection = "";
+                    
+                    class build_sand_short
+                    {
+                        displayName = "SW Short";
+                        condition = "true";
+                        statement = "[_target,'Land_BagFence_Short_F',[0,2,0]] spawn DEST_fnc_create;";
+                        showDisabled = 0;
+                        distance = 2;
+                    };
+                    
+                    class build_sand_long
+                    {
+                        displayName = "SW Long";
+                        condition = "true";
+                        statement = "[_target,'Land_BagFence_Long_F',[0,2,0]] spawn DEST_fnc_create;";
+                        showDisabled = 0;
+                        distance = 2;
+                    };
+                    
+                    class build_sand_round
+                    {
+                        displayName = "SW Round";
+                        condition = "true";
+                        statement = "[_target,'Land_BagFence_Round_F',[0,2,0]] spawn DEST_fnc_create;";
+                        showDisabled = 0;
+                        distance = 2;
+                    };
                 };
             };
         };
     };
 };
 
-class Extended_Init_EventHandlers {
-    class CAManBase {
-        class Sandbag_init_eh {
-            init = "SANDBAG_obj = objNull; ['ace_unconscious', {if ((_this select 1)) then {deletevehicle SANDBAG_obj; SANDBAG_obj = objNull;} }] call CBA_fnc_addEventHandler;";
-        };
-    };
-};
+//((vehicle player) isEqualTo player) && ((count attachedObjects player) == 0)
