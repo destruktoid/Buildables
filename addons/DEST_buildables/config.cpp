@@ -41,7 +41,7 @@ class CfgVehicles
                 class ACE_DEST_Build
                 {
                     displayName = "Build Objects";
-                    condition = "true";
+                    condition = "((vehicle player) isEqualTo player) && ((count attachedObjects player) == 0)";
                     statement = "";
                     distance = 3;
                     selection = "";
@@ -50,7 +50,7 @@ class CfgVehicles
                     {
                         displayName = "SW Short";
                         condition = "true";
-                        statement = "[_target,'Land_BagFence_Short_F',[0,2,0]] spawn DEST_fnc_create;";
+                        statement = "[_target,'Land_BagFence_Short_F',[0,2,0],180] spawn DEST_fnc_create;";
                         showDisabled = 0;
                         distance = 2;
                     };
@@ -59,7 +59,7 @@ class CfgVehicles
                     {
                         displayName = "SW Long";
                         condition = "true";
-                        statement = "[_target,'Land_BagFence_Long_F',[0,2,0]] spawn DEST_fnc_create;";
+                        statement = "[_target,'Land_BagFence_Long_F',[0,2,0],180] spawn DEST_fnc_create;";
                         showDisabled = 0;
                         distance = 2;
                     };
@@ -68,13 +68,61 @@ class CfgVehicles
                     {
                         displayName = "SW Round";
                         condition = "true";
-                        statement = "[_target,'Land_BagFence_Round_F',[0,2,0]] spawn DEST_fnc_create;";
+                        statement = "[_target,'Land_BagFence_Round_F',[0,2,0],180] spawn DEST_fnc_create;";
+                        showDisabled = 0;
+                        distance = 2;
+                    };
+                    
+                    class build_barricde_short
+                    {
+                        displayName = "SB Short";
+                        condition = "true";
+                        statement = "[_target,'Land_SandbagBarricade_01_half_F',[0,2.5,0]] spawn DEST_fnc_create;";
+                        showDisabled = 0;
+                        distance = 2;
+                    };
+                    
+                    class build_barricde_tall
+                    {
+                        displayName = "SB Tall";
+                        condition = "true";
+                        statement = "[_target,'Land_SandbagBarricade_01_hole_F',[0,2.5,0]] spawn DEST_fnc_create;";
+                        showDisabled = 0;
+                        distance = 2;
+                    };
+                    
+                    class build_hedgehog
+                    {
+                        displayName = "Hedgehog";
+                        condition = "true";
+                        statement = "[_target,'Hedgehog',[0,2.5,0]] spawn DEST_fnc_create;";
+                        showDisabled = 0;
+                        distance = 2;
+                    };
+                    
+                    class build_razorwire
+                    {
+                        displayName = "Razorwire";
+                        condition = "true";
+                        statement = "[_target,'Land_Razorwire_F',[0,2.5,0]] spawn DEST_fnc_create;";
                         showDisabled = 0;
                         distance = 2;
                     };
                 };
             };
         };
+        
+        ace_dragging_canDrag = 1;
+        ace_dragging_dragPosition[] = {0, 1.2, 0};
+        ace_dragging_dragDirection = 0;
+        ace_dragging_canCarry = 1;
+        ace_dragging_carryPosition[] = {0, 1.2, 0};
+        ace_dragging_carryDirection = 0;
+        
+        class TransportItems{};		
+        class TransportWeapons{};
+        class TransportMagazines{};
+        class TransportBackpacks{};
     };
 };
 
