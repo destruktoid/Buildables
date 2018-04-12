@@ -8,4 +8,4 @@ params[
 
 
 _obj = _class createVehicle (getPosATL _object);
-[_obj, true, _rel, _dir] call ace_dragging_fnc_setCarryable;
+[_obj, true, _rel, _dir] remoteexec ["ace_dragging_fnc_setCarryable",playableUnits,true];
